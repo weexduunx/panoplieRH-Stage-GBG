@@ -39,6 +39,10 @@ Route::group(['middleware' => ['auth', 'save_last_action_timestamp']], function(
 			Route::put('/users/{user}/update', 'update')->name('update');
 			Route::delete('/users/{user}/delete', 'delete')->name('delete');
 		});
+
+		// ImageController
+			Route::post('images', [App\Http\Controllers\Admin\ImageController::class, 'store'])->name('images.store');
+
 		// Tache routes 
 		Route::controller(TacheController::class)->group(function () {
 			Route::get('checklists/{checklist}/taches/{tach}/edit', 'edit')->name('edit');

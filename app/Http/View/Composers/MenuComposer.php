@@ -32,17 +32,31 @@ class MenuComposer
         if (is_null($last_action_at)) {
             $last_action_at = now()->subYears(10);
         }
+
+        $user_checklists = Checklist::where('user_id', auth()->id())->get();
         
         foreach ($menu->toArray() as $group){
 
             if (count($group['checklists']) > 0) {
-                $group['is_new'] = Carbon::create($group['created_at'])->greaterThan($last_action_at);
-                $group['is_updated'] = !($group['is_new']) && Carbon::create($group['updated_at'])->greaterThan($last_action_at);
+
+                $group_updated_at = $user_checklists->where('checklist_group_id', $group['id'])->max('updated_at');
+
+                $group['is_new'] = $group_updated_at && Carbon::create($group['created_at'])->greaterThan($group_updated_at);
+                $group['is_updated'] = !($group['is_new']) && $group_updated_at
+                                    && Carbon::create($group['updated_at'])->greaterThan($group_updated_at);
 
 
                 foreach ($group['checklists'] as &$checklist){
-                    $checklist['is_new'] = !($group['is_new']) && Carbon::create($checklist['created_at'])->greaterThan($last_action_at);
-                    $checklist['is_updated'] = !($group['is_updated']) && !($checklist['is_new']) && Carbon::create($checklist['updated_at'])->greaterThan($last_action_at);
+
+                    $checklist_updated_at = $user_checklists->where('checklist_id', $checklist['id'])->max('updated_at');
+
+                    $checklist['is_new'] = !($group['is_new']) 
+                                            && $checklist_updated_at
+                                            && Carbon::create($checklist['created_at'])->greaterThan($checklist_updated_at);
+                    $checklist['is_updated'] = !($group['is_new']) && !($group['is_updated']) 
+                                            && !($checklist['is_new']) 
+                                            && $checklist_updated_at
+                                            && Carbon::create($checklist['updated_at'])->greaterThan($checklist_updated_at);
                     $checklist['taches'] = 1;
                     $checklist['taches_completes'] = 0;
                 }

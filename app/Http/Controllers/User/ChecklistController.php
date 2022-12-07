@@ -14,7 +14,6 @@ class ChecklistController extends Controller
       // Synchronisation du checklist depuis admin
       (new ChecklistService())->sync_checklist($checklist, auth()->id());
 
-
       return view ( 'users.checklist.show', compact('checklist'));
    }
 }

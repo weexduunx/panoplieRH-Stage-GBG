@@ -107,7 +107,6 @@
     <!-- / Layout wrapper -->
     {{-- LiveWire Script --}}
     @livewireScripts
-    <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>
 
     @stack('scripts')

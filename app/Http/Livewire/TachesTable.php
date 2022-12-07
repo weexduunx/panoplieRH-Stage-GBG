@@ -12,16 +12,34 @@ class TachesTable extends Component
 
     public function render()
     {
-        $taches = $this->checklist->taches()->orderBy('position')->get();
+        $taches = $this->checklist->taches()->where('user_id', Null)->orderBy('position')->get();
 
         return view('livewire.taches-table', compact('taches'));
     }
 
-    public function updateTaskOrder($taches){
-
-        // dd($taches);
-        foreach ($taches as $tache){
-            Tache::find($tache['value'])->update(['position' => $tache['order']]);
+    public function task_up($tache_id)
+    {
+        $tache = Tache::find($tache_id);
+        if ($tache){
+            Tache::whereNull('user_id')->where('position', $tache->position - 1)->update([
+                'position' => $tache->position
+            ]);
+            $tache->update(['position' => $tache->position - 1]);
+   
         }
+
+    }
+
+    public function task_down($tache_id)
+    {
+        $tache = Tache::find($tache_id);
+        if ($tache){
+            Tache::whereNull('user_id')->where('position', $tache->position + 1)->update([
+                'position' => $tache->position
+            ]);
+            $tache->update(['position' => $tache->position + 1]);
+   
+        }
+
     }
 }

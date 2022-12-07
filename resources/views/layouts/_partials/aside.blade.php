@@ -143,34 +143,36 @@
                     <span class="menu-header-text">
                         {{ $group['nom'] }}
                     </span>
-                    @if($group['is_new'])
+                    @if ($group['is_new'])
                         <span class=" badge rounded-pill bg-info ">
-                            {{ __('New')  }}
+                            {{ __('New') }}
                         </span>
                     @elseif($group['is_updated'])
                         <span class=" badge rounded-pill bg-success  ">
-                            {{ __('Màj')  }}
+                            {{ __('Màj') }}
                         </span>
                     @endif
                 </li>
                 @foreach ($group['checklists'] as $checklist)
                     <li class="menu-item">
-                        <a href="{{ route('users.checklists.show', [$checklist['id']]) }}"
-                            class="menu-link">
+                        <a href="{{ route('users.checklists.show', [$checklist['id']]) }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-list-plus bx-tada"></i>
                             <div>
-                                    {{ $checklist['nom'] }}
-                                    @if($checklist['is_new'])
-                                    <span class=" badge rounded-pill bg-info ">
-                                        {{ __('New')  }}
+                                {{ $checklist['nom'] }}
+                                    <span class=" badge rounded-pill bg-warning ">
+                                        {{ $checklist['completed_tasks_count'] }}/{{ $checklist['tasks_count'] }}
                                     </span>
-                                    @elseif($checklist['is_updated'])
+                                @if ($checklist['is_new'])
+                                    <span class=" badge rounded-pill bg-info ">
+                                        {{ __('New') }}
+                                    </span>
+                                @elseif($checklist['is_updated'])
                                     <span class=" badge rounded-pill bg-success  ">
-                                        {{ __('Màj')  }}
+                                        {{ __('Màj') }}
                                     </span>
                                 @endif
-                              
-                            </div> 
+
+                            </div>
                         </a>
                     </li>
                 @endforeach

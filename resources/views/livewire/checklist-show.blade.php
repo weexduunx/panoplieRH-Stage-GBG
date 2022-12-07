@@ -23,14 +23,14 @@
         <table class="table table-hover">
             <tbody>
                 @foreach ($checklist->taches->where('user_id', NULL) as $tache)
-                    <tr>
+                    <tr >
                         <td >
                             <input class="form-check-input me-1" type="checkbox" wire:click="taches_completes({{ $tache->id }})"
                              @if (in_array($tache->id, $completed_tasks)) checked="checked" @endif />
                         </td>
                         <td wire:click="toggle_task({{ $tache->id }})">
                             <i class="fa fa-tasks fa-lg text-primary me-3"></i>
-                            <strong>{{ $tache->nom }}</strong>
+                            <strong data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-custom-class="tooltip-primary" title="Cliquez ici">{{ $tache->nom }}</strong>
                         </td>
                         <td wire:click="toggle_task({{ $tache->id }})">
                             @if (in_array($tache->id, $opened_tasks))
@@ -44,7 +44,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="d-flex p-3 border">
-                                    <img src="{{ asset('assets/img/pngwing.png') }}" alt="collapse-image" height="125"
+                                    <img src="{{ asset('assets\img\icons8-liste-de-tâches-96.png') }}" alt="collapse-image" height="96"
                                         class="me-4 mb-sm-0 mb-2">
                                     <span>
                                         {!! $tache->description !!}

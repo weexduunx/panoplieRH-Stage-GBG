@@ -40,7 +40,7 @@ class TacheController extends Controller
      */
     public function store(StoreTacheRequest $request, Checklist $checklist)
     {
-        $position = $checklist->taches()->max('position') + 1;
+        $position = $checklist->taches()->where('user_id', NULL)->max('position') + 1;
 
         $checklist->taches()->create($request->validated() + ['position' => $position]);
 
@@ -102,7 +102,7 @@ class TacheController extends Controller
     public function destroy(Checklist $checklist, $id)
     {
 
-        Tache::where('id', '=', $id)->update([
+        Tache::where('user_id', NULL)->where('id', '=', $id)->update([
             'position' => DB::raw('position - 1')
         ]);
 

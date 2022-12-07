@@ -66,47 +66,7 @@
                             {{ __('Liste des tâches') }}
                         </h5>
                         <div>
-                            {{-- @livewire('taches-table', ['checklist' => $checklist]) --}}
-                            <table class="table table-hover table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th>Nom de la tâche</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($checklist->taches as $tache)
-                                        <tr>
-                                            <td><i class="bx bx-task bx-sm  me-3"></i>
-                                                <strong>
-                                                    {{ $tache->nom }}
-                                                </strong>
-                                            </td>
-                                            <td>
-                                                {{ $tache->description }}
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-sm btn-secondary"
-                                                    href="{{ route('admin.edit', [$checklist, $tache->id]) }}">
-                                                    <i class="bx bx-edit-alt me-1"></i>
-
-                                                </a>
-                                                <form style="display: inline-block"
-                                                    action="{{ route('admin.destroy', [$checklist, $tache->id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('{{ __('Etes-vous sûr de vouloir supprimer la tâche ?') }}')">
-                                                        <i class="bx bx-trash me-1"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            @livewire('taches-table', ['checklist' => $checklist])
                         </div>
                     </div>
                 </div>

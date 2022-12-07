@@ -17,5 +17,10 @@ class Checklist extends Model
         return $this->hasMany(Tache::class);
     }
 
+    public function user_taches (){
+        
+        return $this->hasMany(Tache::class)->where('user_id', auth()->id());
+    }
+
    
 }

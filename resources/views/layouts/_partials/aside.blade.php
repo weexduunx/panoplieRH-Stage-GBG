@@ -159,15 +159,18 @@
                             <i class="menu-icon tf-icons bx bx-list-plus bx-tada"></i>
                             <div>
                                 {{ $checklist['nom'] }}
-                                    <span class=" badge rounded-pill bg-warning ">
-                                        {{ $checklist['completed_tasks_count'] }}/{{ $checklist['tasks_count'] }}
-                                    </span>
+
+                                @livewire('completed-tasks-counter', [
+                                    'completed_tasks' => count($checklist['user_taches']),
+                                    'tasks_count' => count($checklist['taches']),
+                                    'checklist_id' => $checklist['id']
+                                ])
                                 @if ($checklist['is_new'])
                                     <span class=" badge rounded-pill bg-info ">
                                         {{ __('New') }}
                                     </span>
                                 @elseif($checklist['is_updated'])
-                                    <span class=" badge rounded-pill bg-success  ">
+                                    <span class=" badge rounded-pill bg-primary  ">
                                         {{ __('Màj') }}
                                     </span>
                                 @endif

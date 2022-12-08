@@ -29,7 +29,7 @@
                     </strong>
                 </td>
                 <td>
-                    {{ $tache->description }}
+                    {!! $tache->description !!}
                 </td>
                 <td>
                     <a class="btn btn-sm btn-secondary"

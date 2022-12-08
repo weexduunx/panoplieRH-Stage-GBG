@@ -43,7 +43,9 @@ class ChecklistShow extends Component
 
         $tache = Tache::find($tache_id);
         if($tache){
-            $user_tache = Tache::where('tache_id', $tache_id)->first();
+            $user_tache = Tache::where('tache_id', $tache_id)
+                ->where('user_id', auth()->id())
+                ->first();
             if ($user_tache){
                 if(is_null($user_tache->completed_at)){
                     $user_tache->update(['completed_at' => now()]);
@@ -56,6 +58,11 @@ class ChecklistShow extends Component
                 $user_tache['completed_at'] = now();
                 $user_tache->save();
             }
+
+            $this->emit('task_complete',  
+                $tache_id, 
+                 $tache->checklist_id
+           );
         }
     }
 }

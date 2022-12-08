@@ -6,7 +6,7 @@
                     <div class="card-body">
                         <h5 class="card-title text-primary">{{ __('Revue des tâches') }} </h5>
                         <p class="mb-4">Vous avez fait
-                            <span class="fw-bold">72%</span>
+                            <span class="fw-bold">---%</span>
                             Plus de tâches aujourd'hui.
                         </p>
                         
@@ -56,9 +56,9 @@
                     <div class="text-center pt-3 mb-2 fw-bold">
                         <h1>{{ $checklists->sum('user_taches_count') }}/{{ $checklists->sum('taches_count') }}</h1>
                     </div>
-                    <div class="text-center fw-semibold pt-3 mb-2">62% des tâches sont complétes</div>
+                    <div class="text-center fw-semibold pt-3 mb-2">{{ $checklists->sum('user_taches_count') / $checklists->sum('taches_count') * 100}}% des tâches sont complétes</div>
 
-                    <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
+                    {{-- <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
                         <div class="d-flex">
                             <div class="me-2">
                                 <span class="badge bg-label-primary p-2"><i
@@ -78,7 +78,7 @@
                                 <h6 class="mb-0">$41.2k</h6>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>

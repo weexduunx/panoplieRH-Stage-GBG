@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($checklist->taches as $tache)
+        @foreach ($checklist->taches->where('user_id', null) as $tache)
             <tr  >
                 <td colspan="2">
                     @if ($tache->position > 1)

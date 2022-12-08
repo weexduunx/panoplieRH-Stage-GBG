@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title">
@@ -34,8 +34,6 @@
                                 <tr>
                                     <td colspan="2">
                                         <div class="d-flex p-3 border">
-                                            <img src="{{ asset('assets\img\icons8-liste-de-tâches-96.png') }}"
-                                                alt="collapse-image" height="96" class="me-4 mb-sm-0 mb-2">
                                             <span>
                                                 {!! $tache->description !!}
                                             </span>
@@ -49,5 +47,54 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div class="col-md-4">
+        @if(!is_null($current_task))
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="m-2">
+                            <a href="#">&star;</a>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <small>{{ $current_task->id }}</small>
+                            <h4 class="mb-0">{{ $current_task->nom }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    &#9788;
+                    &nbsp;
+                    @if ($current_task->added_to_my_day_at)
+                    <a href="#" wire:click.prevent="add_to_my_day({{  $current_task->id  }})">{{ __('Supprimer de ma journée') }}</a>
+                    @else
+                    <a href="#" wire:click.prevent="add_to_my_day({{  $current_task->id  }})">{{ __('Ajouter dans ma journée') }}</a>
+                    @endif
+                </div>  
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    &#9993;
+                    &nbsp;
+                    <a href="#" >{{ __('Me rappeler') }}</a>
+                    <hr />
+                    &#9745;
+                    &nbsp;
+                    <a href="#">{{ __('Ajouter une date d\'échéance') }}</a>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    &#9998;
+                    &nbsp;
+                    <a href="#">{{ __('Note') }}</a>
+                </div>
+            </div>
+        @endif
     </div>
 </div>

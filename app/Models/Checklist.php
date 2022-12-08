@@ -22,5 +22,11 @@ class Checklist extends Model
         return $this->hasMany(Tache::class)->where('user_id', auth()->id());
     }
 
+    public function user_completed_taches()
+    {
+        return $this->hasMany(Tache::class)
+        ->where('user_id', auth()->id())
+        ->whereNotNull('completed_at');
+    }
    
 }

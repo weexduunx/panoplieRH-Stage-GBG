@@ -20,7 +20,8 @@ class Tache extends Model implements HasMedia
         'position',
         'user_id',
         'tache_id',
-        'completed_at'
+        'completed_at',
+        'added_to_my_day_at',
     ];
 
     public function registerAllMediaConversions(?Media $media = null): void

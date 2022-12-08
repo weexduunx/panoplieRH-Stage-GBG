@@ -138,6 +138,18 @@
                 </li>
             @endpermission
         @else
+            @foreach ($user_taches_menu as $key => $user_taches_menu )
+                <li class="menu-item">
+                    <a href="" class="menu-link">
+                        <i class="menu-icon tf-icons {{ $user_taches_menu['icon'] }}"></i>
+                        {{ $user_taches_menu['name'] }}
+                        @livewire('user-tasks-counter', [
+                            'task_type' => $key,
+                            'tasks_count' => $user_taches_menu['tasks_count'],
+                        ])
+                    </a>
+                </li>
+            @endforeach
             @foreach ($user_menu as $group)
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">

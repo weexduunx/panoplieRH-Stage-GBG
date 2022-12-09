@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Checklist;
 use App\Models\ChecklistGroup;
 use App\Models\Tache;
-use Illuminate\View\View;
 use Carbon\Carbon;
 
 
@@ -40,8 +39,8 @@ class MenuService
 
             if (count($group['checklists']) > 0) {
 
-                // $group_updated_at = $user_checklists->where('checklist_group_id', $group['id'])->max('updated_at');
-                $group_updated_at = $last_action_at;
+                $group_updated_at = $user_checklists->where('checklist_group_id', $group['id'])->max('updated_at');
+                // $group_updated_at = $last_action_at;
 
                 $group['is_new'] = $group_updated_at && Carbon::create($group['created_at'])->greaterThan($group_updated_at);
                 $group['is_updated'] = !($group['is_new']) && $group_updated_at
@@ -50,8 +49,8 @@ class MenuService
 
                 foreach ($group['checklists'] as &$checklist) {
 
-                    // $checklist_updated_at = $user_checklists->where('checklist_id', $checklist['id'])->max('updated_at');
-                    $checklist_updated_at = $last_action_at;
+                    $checklist_updated_at = $user_checklists->where('checklist_id', $checklist['id'])->max('updated_at');
+                    // $checklist_updated_at = $last_action_at;
 
                     $checklist['is_new'] = !($group['is_new'])
                         && $checklist_updated_at
@@ -75,18 +74,18 @@ class MenuService
             $user_taches_menu = [
                 'my_day' => [
                     'name' => __('Ma journée'),
-                    'icon' => 'fas fa-sun',
+                    'icon' => 'bx bx-sun',
                     'tasks_count' => $user_taches->whereNotNull('added_to_my_day_at')->count()
                 ],
                 'important' => [
                     'name' => __('Priorisé'),
-                    'icon' => 'fas fa-star',
-                    'tasks_count' => 0
+                    'icon' => 'bx bx-star ',
+                    'tasks_count' => $user_taches->where('is_important', 1)->count()
                 ],
                 'planned' => [
                     'name' => __('Plannifiées'),
-                    'icon' => 'fas fa-calendar',
-                    'tasks_count' => 0
+                    'icon' => 'bx bx-calendar-check',
+                    'tasks_count' => $user_taches->whereNotNull('due_date')->count()
                 ],
             ];
         }

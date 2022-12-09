@@ -11,6 +11,8 @@ class ChecklistShow extends Component
     public $opened_tasks = [];
     public $completed_tasks = [];
     public ?Tache $current_task;
+    public $due_date_opened = FALSE;
+    public $due_date;
 
 
 
@@ -100,7 +102,7 @@ class ChecklistShow extends Component
                 $user_tache->update(['added_to_my_day_at' => now()]);
                 $this->emit('user_tasks_counter_change', 'my_day');
             } else {
-                $user_tache->update(['added_to_my_day_at' => now()]);
+                $user_tache->update(['added_to_my_day_at' => Null]);
                 $this->emit('user_tasks_counter_change', 'my_day', -1);
 
             }
@@ -117,4 +119,75 @@ class ChecklistShow extends Component
         $this->current_task = $user_tache;
 
     }
+
+    public function mark_as_important($tache_id)
+    {
+        $user_tache = Tache::where('user_id', auth()->id())
+        ->where(function($query) use ($tache_id){
+            $query->where('id', $tache_id)
+            ->orWhere('tache_id', $tache_id);
+        })
+        ->first();
+
+        if($user_tache){
+            if($user_tache->is_important == 0){
+                $user_tache->update(['is_important' => 1]);
+                $this->emit('user_tasks_counter_change', 'important');
+            } else {
+                $user_tache->update(['is_important' => 0]);
+                $this->emit('user_tasks_counter_change', 'important', -1);
+
+            }
+        } else {
+            $task = Tache::find($tache_id);
+            $user_tache = $task->replicate();
+            $user_tache['user_id'] = auth()->id();
+            $user_tache['tache_id'] = $tache_id;
+            $user_tache['is_important'] = 1;
+            $user_tache->save();
+            $this->emit('user_tasks_counter_change', 'important');
+
+        }
+        $this->current_task = $user_tache;
+
+    }
+
+    public function toggle_due_date(){
+        $this->due_date_opened = !$this->due_date_opened;
+    }
+
+    public function set_due_date($tache_id, $due_date = NULL){
+        $user_tache = Tache::where('user_id', auth()->id())
+        ->where(function ($query) use ($tache_id){
+            $query->where('id', $tache_id)
+            ->orWhere('tache_id', $tache_id);
+        })
+        ->first();
+        if ($user_tache){
+            if (is_null($due_date)){
+                $user_tache->update(['due_date' => NULL]);
+                $this->emit('user_tasks_counter_change', 'planned', -1);
+            } else {
+                $user_tache->update(['due_date' => $due_date]);
+                $this->emit('user_tasks_counter_change', 'planned');
+            }
+        } else {
+            $task = Tache::find($tache_id);
+            $user_tache = $task->replicate();
+            $user_tache['user_id'] = auth()->id();
+            $user_tache['tache_id'] = $tache_id;
+            $user_tache['due_date'] = $due_date;
+            $user_tache->save();
+            $this->emit('user_tasks_counter_change','planned');
+
+        }
+        $this->current_task = $user_tache ;
+    }
+
+    public function updateDueDate($value)
+    {
+        $this->set_due_date($this->current_task->id, $value);
+    }
+
+
 }

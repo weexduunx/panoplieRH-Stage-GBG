@@ -22,6 +22,12 @@ class Tache extends Model implements HasMedia
         'tache_id',
         'completed_at',
         'added_to_my_day_at',
+        'is_important',
+        'due_date'
+    ];
+
+    protected $dates = [
+        'due_date'
     ];
 
     public function registerAllMediaConversions(?Media $media = null): void

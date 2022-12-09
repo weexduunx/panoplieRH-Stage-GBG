@@ -147,6 +147,10 @@
                             'task_type' => $key,
                             'tasks_count' => $user_taches_menu['tasks_count'],
                         ])
+                            <span class=" badge badge-center rounded-pill bg-label-primary">
+                                {{$user_taches_menu['tasks_count'] }}
+                            </span>
+                        
                     </a>
                 </li>
             @endforeach
@@ -156,11 +160,11 @@
                         {{ $group['nom'] }}
                     </span>
                     @if ($group['is_new'])
-                        <span class=" badge rounded-pill bg-info ">
+                        <span class=" badge rounded-pill bg-label-info ">
                             {{ __('New') }}
                         </span>
                     @elseif($group['is_updated'])
-                        <span class=" badge rounded-pill bg-success  ">
+                        <span class=" badge rounded-pill bg-label-success  ">
                             {{ __('Màj') }}
                         </span>
                     @endif
@@ -178,11 +182,11 @@
                                     'checklist_id' => $checklist['id']
                                 ])
                                 @if ($checklist['is_new'])
-                                    <span class=" badge rounded-pill bg-info ">
+                                    <span class=" badge rounded-pill bg-label-info ">
                                         {{ __('New') }}
                                     </span>
                                 @elseif($checklist['is_updated'])
-                                    <span class=" badge rounded-pill bg-primary  ">
+                                    <span class=" badge rounded-pill bg-label-primary  ">
                                         {{ __('Màj') }}
                                     </span>
                                 @endif

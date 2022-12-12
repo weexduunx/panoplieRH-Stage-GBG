@@ -39,8 +39,8 @@ class MenuService
 
             if (count($group['checklists']) > 0) {
 
-                $group_updated_at = $user_checklists->where('checklist_group_id', $group['id'])->max('updated_at');
-                // $group_updated_at = $last_action_at;
+                // $group_updated_at = $user_checklists->where('checklist_group_id', $group['id'])->max('updated_at');
+                $group_updated_at = $last_action_at;
 
                 $group['is_new'] = $group_updated_at && Carbon::create($group['created_at'])->greaterThan($group_updated_at);
                 $group['is_updated'] = !($group['is_new']) && $group_updated_at
@@ -49,8 +49,8 @@ class MenuService
 
                 foreach ($group['checklists'] as &$checklist) {
 
-                    $checklist_updated_at = $user_checklists->where('checklist_id', $checklist['id'])->max('updated_at');
-                    // $checklist_updated_at = $last_action_at;
+                    // $checklist_updated_at = $user_checklists->where('checklist_id', $checklist['id'])->max('updated_at');
+                    $checklist_updated_at = $last_action_at;
 
                     $checklist['is_new'] = !($group['is_new'])
                         && $checklist_updated_at

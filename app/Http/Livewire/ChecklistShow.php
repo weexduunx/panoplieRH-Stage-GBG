@@ -8,27 +8,67 @@ use Livewire\Component;
 class ChecklistShow extends Component
 {
     public $checklist;
+    public $list_type;
+    public $list_name;
+    public $list_tasks;
+    public $user_tasks;
+    
     public $opened_tasks = [];
     public $completed_tasks = [];
+
     public ?Tache $current_task;
+
     public $due_date_opened = FALSE;
     public $due_date;
 
+    public $note_opened = FALSE;
+    public $note;
 
 
     public function mount()
     {
-        $this->completed_tasks = Tache::where('checklist_id', $this->checklist->id)
-            ->where('user_id', auth()->id())
-            ->whereNotNull('completed_at')
-            ->pluck('tache_id')
-            ->toArray();
-
             $this->current_task = NULL;
     }
 
     public function render()
     {
+        if (is_null($this->list_type)){
+            $this->list_name = $this->checklist->nom;
+            $this->list_tasks = $this->checklist->taches->where('user_id', NULL);
+            $this->user_tasks = $this->checklist->user_taches()->get();
+            $this->completed_tasks = $this->checklist->user_taches
+                    ->whereNotNull('completed_at')
+                    ->pluck('tache_id')
+                    ->toArray();  
+        } else {
+            switch ($this->list_type){
+                case 'my_day': 
+                    $this->list_name = __('Ma journée');
+                    $this->user_tasks = Tache::where('user_id', auth()->id())
+                        ->whereNotNull('added_to_my_day_at')
+                        ->get();
+                        break;
+                case 'important' :
+                    $this->list_name = __('Important');
+                    $this->user_tasks = Tache::where('user_id', auth()->id())
+                        ->where('is_important', 1)
+                        ->get();
+                        break;
+                case 'planned':
+                    $this->list_name = __('Plannifiées');
+                    $this->user_tasks = Tache::where('user_id', auth()->id())
+                        ->whereNotNull('due_date')
+                        ->orderBy('due_date')
+                        ->get();
+                        break;
+            }
+
+            $this->list_tasks = Tache::whereIn('id',$this->user_tasks->pluck('tache_id'))->get();
+            $this->completed_tasks = $this->user_tasks
+                    ->whereNotNull('completed_at')
+                    ->pluck('tache_id')
+                    ->toArray();
+        }
         return view('livewire.checklist-show');
     }
 
@@ -187,6 +227,17 @@ class ChecklistShow extends Component
     public function updateDueDate($value)
     {
         $this->set_due_date($this->current_task->id, $value);
+    }
+
+    public function toggle_note(){
+        $this->note_opened = !$this->note_opened;
+        $this->note = $this->current_task->note;
+    }
+
+    public function save_note()
+    {
+        $this->current_task->update(['note' => $this->note]);
+        $this->note_opened = FALSE;
     }
 
 

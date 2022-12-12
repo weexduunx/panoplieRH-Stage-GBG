@@ -23,7 +23,9 @@ class Tache extends Model implements HasMedia
         'completed_at',
         'added_to_my_day_at',
         'is_important',
-        'due_date'
+        'due_date',
+        'note',
+
     ];
 
     protected $dates = [
@@ -33,10 +35,20 @@ class Tache extends Model implements HasMedia
     public function registerAllMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-            ->width(368);
+            ->width(600);
             // ->height(232)
             // ->sharpen(10)
 
+    }
+
+    public function checklist()
+    {
+        return $this->belongsTo(Checklist::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

@@ -3,13 +3,15 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title">
-                    {{ $checklist->nom }}
+                    {{-- {{ $checklist->nom }} --}}
+                    {{ $list_name }}
                 </h5>
             </div>
             <div class="card-body table-responsive">
+                @if($list_tasks->count())
                 <table class="table table-hover">
                     <tbody>
-                        @foreach ($checklist->taches->where('user_id', null) as $tache)
+                        @foreach ($list_tasks as $tache)
                             <tr>
                                 <td>
                                     <input class="form-check-input me-1" type="checkbox"
@@ -21,16 +23,19 @@
                                     <strong data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top"
                                         data-bs-custom-class="tooltip-primary"
                                         title="Cliquez ici">{{ $tache->nom }}</strong>
+                                        @if (!is_null($list_type))
+                                            <div style="font-style: italic; font-size: 11px">
+                                                {{ $tache->checklist->nom }}
+                                                @if (optional($user_tasks->where('tache_id' , $tache->id)->first())->due_date)
+                                                | {{ __('Echéance') }} {{ $user_tasks->where('tache_id', $tache->id)->first()->due_date->format('M d, Y') }}
+                                                @endif
+                                            </div>
+                                            
+                                        @endif
                                 </td>
-                                {{-- <td wire:click="toggle_task({{ $tache->id }})">
-                                    @if (in_array($tache->id, $opened_tasks))
-                                        <i class='bx bx-caret-down-circle'></i>
-                                    @else
-                                        <i class='bx bx-caret-up-circle'></i>
-                                    @endif
-                                </td> --}}
+                
                                 <td>
-                                    @if (optional($checklist->user_taches()->where('tache_id', $tache->id)->first())->is_important)
+                                    @if (optional($user_tasks->where('tache_id', $tache->id)->first())->is_important)
                                         <a wire:click.prevent="mark_as_important({{ $tache->id }})" class="bx bxs-star"  href="#">
                                             
                                         </a>
@@ -55,6 +60,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                @else
+                {{ __('Aucune tâche trouvée') }}
+                @endif
             </div>
         </div>
     </div>
@@ -145,7 +153,6 @@
                                   </div>
                                 </div>
                               </li>
-                        
                           </ul>  
                         @endif
                     @endif
@@ -156,7 +163,33 @@
                 <div class="card-body">
                     &#9998;
                     &nbsp;
-                    <a href="#">{{ __('Note') }}</a>
+                    {{-- <a href="#">{{ __('Note') }}</a> --}}
+                        @if($current_task->note)
+                            <a href="#" wire:click.prevent="toggle_note">{{ __('Note') }}</a>
+                            @if (!$note_opened)
+                            <p>
+                                {{ $current_task->note }}
+                                <br>
+                                <a href="#" wire:click.prevent="toggle_note">{{ __('Modifier') }}</a>
+                            </p>
+                            @endif
+                            @else
+                            <a href="#" wire:click.prevent="toggle_note">{{ __('Note') }}</a>
+                        @endif
+                        @if ($note_opened)
+                            <div >
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-message2" class="input-group-text"><i class="bx bx-comment"></i></span>
+                                    <textarea wire:model="note" id="basic-icon-default-message" class="form-control" rows="5"></textarea>
+                                  </div>
+                            </div> 
+                            <br> 
+                            <div class="justify-content-end">
+                                <div class="col-sm-10">
+                                  <button type="submit" wire:click="save_note" class="btn btn-primary">{{ __('Sauvegarder') }}</button>
+                                </div>
+                              </div>  
+                        @endif
                 </div>
             </div>
         @endif

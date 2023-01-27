@@ -14,4 +14,5 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
-    ]);
+    ])
+    .alias({'@calendar': `${__dirname}/node_modules/@enso-ui/calendar/src/bulma`,});

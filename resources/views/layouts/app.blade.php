@@ -31,6 +31,17 @@
         class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/editor.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/flatpickr.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/formValidation.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/app-calendar.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" integrity="sha512-liDnOrsa/NzR+4VyWQ3fBzsDBzal338A1VfUpQvAcdt+eL88ePCOd3n9VQpdA0Yxi4yglmLy/AmH+Lrzmn0eMQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
 
@@ -121,13 +132,32 @@
 
     <!-- Vendors JS -->
     <script src="{{ asset('assets/vendor/libs/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js" integrity="sha512-iusSCweltSRVrjOz+4nxOL9OXh2UA0m8KdjsX8/KUUiJz+TCNzalwE0WE6dYTfHDkXuGuHq3W9YIhDLN7UNB0w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/fullcalendar.js') }}"></script>
+    <script src="{{ asset('assets/js/hammer.js') }}"></script>
+    <script src="{{ asset('assets/js/FormValidation.js') }}"></script>
+    <script src="{{ asset('assets/js/Bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/js/AutoFocus.min.js') }}"></script>
+    <script src="{{ asset('assets/js/select2.js') }}"></script>
+    <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/js/moment.js') }}"></script>
+    <script src="{{ asset('assets/js/app-calendar-events.js') }}"></script>
+    <script src="{{ asset('assets/js/app-calendar.js') }}"></script>
+
+
+
+
+
+   
+
+    
+    
 
     <script>
         class MyUploadAdapter {

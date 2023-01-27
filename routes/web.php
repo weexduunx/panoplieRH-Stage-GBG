@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\ChecklistGroupController;
 use App\Http\Controllers\Admin\TacheController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\GoogleAccountController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,7 +64,7 @@ Route::group(['middleware' => ['auth', 'save_last_action_timestamp']], function(
 		});
 
 		// Checklist routes
-		Route::resource('checklist_groups', ChecklistGroupController::class,);
+		Route::resource('checklist_groups', ChecklistGroupController::class);
 		Route::resource('checklist_groups.checklists', ChecklistController::class);
 
 		//Agenda Route
@@ -77,9 +80,15 @@ Route::group(['middleware' => ['auth', 'save_last_action_timestamp']], function(
 	});
 });
 
+// Managing Google accounts.
+Route::get('google', [GoogleAccountController::class, 'index'])->name('google.index');
+Route::get('google/oauth', [GoogleAccountController::class, 'store'])->name('google.store');
+Route::delete('google/{googleAccount}', [GoogleAccountController::class, 'destroy'])->name('google.destroy');
+Route::get('event', [EventController::class, 'index'])->name('event.index');
 
+// Route Calendier 
 
-
+Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
 
 
 

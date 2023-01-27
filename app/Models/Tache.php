@@ -25,6 +25,7 @@ class Tache extends Model implements HasMedia
         'is_important',
         'due_date',
         'note',
+        'reminder_at',
 
     ];
 
@@ -36,8 +37,6 @@ class Tache extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')
             ->width(600);
-            // ->height(232)
-            // ->sharpen(10)
 
     }
 

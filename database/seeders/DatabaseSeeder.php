@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 		Model::reguard();
 
 		// $this->user();
-		$this->call([EventSeeder::class,]);
+		// $this->call([EventSeeder::class,]);
 		$this->call(UsersTableSeeder::class);
 		$this->call(PagesSeeder::class);
 

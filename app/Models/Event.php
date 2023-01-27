@@ -2,15 +2,32 @@
 
 namespace App\Models;
 
+use App\Models\Calendar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    use HasFactory;
+    protected $with = ['calendar'];
+    protected $fillable = ['google_id', 'name', 'description', 'allday', 'started_at', 'ended_at'];
 
-    public $timestamps = false;
-    public $incrementing = false;
-    protected $keyType = 'string';
-    protected $fillable = ['id', 'title', 'start', 'end',];
+    public function calendar()
+    {
+        return $this->belongsTo(Calendar::class);
+    }
+
+    public function getStartedAtAttribute($start)
+    {
+        return $this->asDateTime($start)->setTimezone($this->calendar->timezone);
+    }
+
+    public function getEndedAtAttribute($end)
+    {
+        return $this->asDateTime($end)->setTimezone($this->calendar->timezone);
+    }
+
+    public function getDurationAttribute()
+    {
+        return $this->started_at->diffForHumans($this->ended_at, true);
+    }
 }

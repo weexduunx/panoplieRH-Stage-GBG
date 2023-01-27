@@ -6,14 +6,19 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "asantibanez/livewire-calendar": "*",
         "browner12/helpers": "^3.4",
+        "google/apiclient": "*",
         "guzzlehttp/guzzle": "^7.2",
         "jeremykenedy/laravel-roles": "^9.0",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
+        "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
         "nesbot/carbon": "^2.64",
+        "ramsey/uuid": "^4.6",
+        "spatie/laravel-google-calendar": "^3.5",
         "spatie/laravel-medialibrary": "*",
         "spatie/laravel-permission": "^5.5"
     },
@@ -64,5 +69,9 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+
+    "repositories": [{ "type": "package", "canonical": false, "package": { "version": "master", "name": "asantibanez/livewire-calendar", "source": { "url": "https://github.com/Butochnikov/livewire-calendar.git", "type": "git", "reference": "master" } } }]
+
+    
 }

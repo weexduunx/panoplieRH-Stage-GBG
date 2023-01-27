@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Event;
+use App\Models\GoogleAccount;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,6 +33,7 @@ class User extends Authenticatable
         'email',
         'password',
 		'is_admin',
+		'google_id',
 		'website',
 		'last_action_at',
     ];
@@ -56,6 +59,22 @@ class User extends Authenticatable
     public function todoitems()
     {
         return $this->hasMany(TodoItem::class);
+    }
+
+	public function googleAccounts()
+    {
+        return $this->hasMany(GoogleAccount::class);
+    }
+
+	public function events()
+    {
+        return Event::whereHas('calendar', function ($calendarQuery) {
+            $calendarQuery->whereHas('googleAccount', function ($accountQuery) {
+                $accountQuery->whereHas('user', function ($userQuery) {
+                    $userQuery->where('id', $this->id);
+                });
+            });
+        });
     }
 }
 
